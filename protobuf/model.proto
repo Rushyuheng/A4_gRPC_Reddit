@@ -22,7 +22,7 @@ message Post {
   }
 
   optional PostState state = 6;
-  optional google.protobuf.Timestamp publication_date = 7
+  optional google.protobuf.Timestamp publication_date = 7;
 
 }
 

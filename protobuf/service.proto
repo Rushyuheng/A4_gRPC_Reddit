@@ -3,6 +3,20 @@ syntax = "proto3";
 package reddit;
 
 import "google/protobuf/timestamp.proto";
-import "./model.proto";
+import "model.proto";
 
+service Reddit {
 
+  rpc CreatePost(CreatePostRequest) returns (CreatePostRespond) {}
+
+}
+
+//wrapped Post input for create post
+message CreatePostRequest {
+  optional Post post = 1;
+}
+
+//wrapped Post output for create post
+message CreatePostRespond {
+  optional Post post = 1;
+}

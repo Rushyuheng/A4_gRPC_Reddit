@@ -3,22 +3,48 @@ from gen import service_pb2_grpc
 from gen import service_pb2
 from gen import model_pb2
 
-def run_grpc_client():
-    # Create a gRPC channel to the server (assuming server running at localhost:50051)
-    channel = grpc.insecure_channel('localhost:50051')
+class RedditClient:
+    def __init__(self):
+        self.channel = None
+        self.stub = None
 
-    # Create a stub (client) to interact with the server
-    stub = service_pb2_grpc.RedditStub(channel)
+    def start_connection(self,port):
+        # Create a gRPC channel to the server (assuming server running at localhost:50051)
+        self.channel = grpc.insecure_channel('localhost:' + port)
 
-    # Create a request message
-    request = model_pb2.Post()
-    # Set fields in the request message, if needed
+        # Create a stub (client) to interact with the server
+        self.stub = service_pb2_grpc.RedditStub(self.channel)
 
-    # Make the gRPC call by invoking the service method with the request
-    response = stub.CreatePost(request)
 
-    # Process the response received from the server
-    print("Received response:", response)
+    def create_post(self):
+        # Create a request message
+        author = model_pb2.User(user_id="rush")
+        post = model_pb2.Post(title="new meme", 
+                                 text="lol", 
+                                 image_url="www.meme.doogi",
+                                 author= author)
+        
+
+        # Make the gRPC call by invoking the service method with the request
+        response = self.stub.CreatePost(service_pb2.CreatePostRequest(post=post))
+
+        # Process the response received from the server
+        print("Received response:", response)
 
 if __name__ == '__main__':
-    run_grpc_client()
+    port = input("Enter the port bewteen 50000 - 50100 to connect to:")
+
+    
+    try:
+        port_value = int(port)
+        if port_value < 50000 or port_value > 50100:
+            print("Invalid Port, using default port 50051")
+            port = "50051"
+    except ValueError:
+        print("Invalid Port, using default port 50051")
+        port = "50051"
+
+
+    client = RedditClient()
+    client.start_connection(port)
+    client.create_post()

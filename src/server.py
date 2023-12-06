@@ -1,20 +1,33 @@
 from concurrent import futures
 
 import grpc
+import logging
 import RedditService
 from gen import service_pb2_grpc
 
-def serve():
+def serve(port:str):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     service_pb2_grpc.add_RedditServicer_to_server(
         RedditService.RedditServicer(), server
     )
-    port = "50051"
     server.add_insecure_port("[::]:" + port)
     server.start()
-    print("server listening on port:" + "50051")
+    print("server listening on port:" + port)
     server.wait_for_termination()
 
 
 if __name__ == "__main__":
-    serve()
+    logging.basicConfig(level=logging.INFO)
+    port = input("Enter the port bewteen 50000 - 50100 to listen on:")
+
+    try:
+        port_value = int(port)
+        if port_value < 50000 or port_value > 50100:
+            print("Invalid Port, using default port 50051")
+            port = "50051"
+    except ValueError:
+        print("Invalid Port, using default port 50051")
+        port = "50051"
+
+
+    serve(port)

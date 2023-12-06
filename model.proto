@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package reddit;
+
+import "google/protobuf/timestamp.proto";
+
+message User {
+  optional string user_id = 1;
+}
+
+
+message Post {
+  optional User author = 1;
+  optional int32 score = 2;
+
+  enum PostState {
+    POST_STATE_NORMAL = 0;
+    POST_STATE_LOCKED = 1;
+    POST_STATE_HIDDEN = 2;
+  }
+
+  optional PostState state = 3;
+  optional google.protobuf.Timestamp publication_date = 4
+
+}
+
+message Comment {
+  optional User author = 1;
+  optional int32 score = 2;
+
+  enum CommetState {
+    POST_STATE_NORMAL = 0;
+    POST_STATE_HIDDEN = 1;
+  }
+
+  optional CommetState state = 3;
+  optional google.protobuf.Timestamp publication_date = 4
+
+}

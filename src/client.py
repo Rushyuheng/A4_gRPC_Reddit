@@ -16,13 +16,10 @@ class RedditClient:
         self.stub = service_pb2_grpc.RedditStub(self.channel)
 
 
-    def create_post(self):
+    def create_post(self, user_id:str, title:str, text:str, url:str):
         # Create a request message
-        author = model_pb2.User(user_id="rush")
-        post = model_pb2.Post(title="new meme", 
-                                 text="lol", 
-                                 image_url="www.meme.doogi",
-                                 author= author)
+        author = model_pb2.User(user_id=user_id)
+        post = model_pb2.Post(title=title,text=text,image_url=url,author=author)
         
 
         # Make the gRPC call by invoking the service method with the request
@@ -47,4 +44,4 @@ if __name__ == '__main__':
 
     client = RedditClient()
     client.start_connection(port)
-    client.create_post()
+    client.create_post("rush", "new meme", "lol", "www.meme.doogi",)

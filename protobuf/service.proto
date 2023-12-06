@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package reddit;
 
-import "google/protobuf/timestamp.proto";
 import "model.proto";
 
 service Reddit {
@@ -50,7 +49,7 @@ message CreateCommentRequest {
 }
 
 //wrapped Comment output for create comment
-message CreatePostRespond {
+message CreateCommentRespond {
   optional Comment comment = 1;
 }
 
@@ -80,10 +79,10 @@ message ExpandReplyRequest{
 
 message ExpandReplyRespond{
   optional Comment comment = 1;
-  repeated CommentWithReply reply = 2 
+  repeated CommentWithReply reply = 2;
 }
 
 message CommentWithReply{
   optional Comment comment = 1;
-  repeated Comment reply = 2 
+  repeated Comment reply = 2;
 }

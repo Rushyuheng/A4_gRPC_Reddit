@@ -13,10 +13,10 @@ message Post {
   optional string text = 2;
 
   oneof url {
-    optional string video_url = 3;
-    optional string image_url = 4;
+    string video_url = 3;
+    string image_url = 4;
   }
-  
+
   optional User author = 5;
   optional int32 score = 6;
 

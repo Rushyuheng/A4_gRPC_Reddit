@@ -4,8 +4,6 @@ package reddit;
 
 import "google/protobuf/timestamp.proto";
 
-
-
 message User {
   optional string user_id = 1;
 }

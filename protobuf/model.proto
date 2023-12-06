@@ -11,9 +11,14 @@ message User {
 message Post {
   optional string title = 1;
   optional string text = 2;
-  optional string URL = 3;
-  optional User author = 4;
-  optional int32 score = 5;
+
+  oneof url {
+    optional string video_url = 3;
+    optional string image_url = 4;
+  }
+  
+  optional User author = 5;
+  optional int32 score = 6;
 
   enum PostState {
     POST_STATE_NORMAL = 0;
@@ -21,8 +26,8 @@ message Post {
     POST_STATE_HIDDEN = 2;
   }
 
-  optional PostState state = 6;
-  optional google.protobuf.Timestamp publication_date = 7;
+  optional PostState state = 7;
+  optional google.protobuf.Timestamp publication_date = 8;
 
 }
 

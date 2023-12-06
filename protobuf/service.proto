@@ -6,9 +6,13 @@ import "google/protobuf/timestamp.proto";
 import "model.proto";
 
 service Reddit {
-
   rpc CreatePost(CreatePostRequest) returns (CreatePostRespond) {}
-
+  rpc VotePost(VotePostRequest) returns (VotePostRespond) {}
+  rpc GetPost(GetPostRequest) returns (GetPostRespond) {}
+  rpc CreateComment(CreateCommentRequest) returns (CreateCommentRespond) {}
+  rpc VoteComment(VoteCommentRequest) returns (VoteCommentRespond) {}
+  rpc GetMostUpvoteComment(MostUpvoteCommentRequest) returns (stream MostUpvoteCommentRespond) {}
+  rpc ExpandReply(ExpandReplyRequest) returns (stream ExpandReplyRespond) {}
 }
 
 //wrapped Post input for create post
@@ -19,4 +23,67 @@ message CreatePostRequest {
 //wrapped Post output for create post
 message CreatePostRespond {
   optional Post post = 1;
+}
+
+message VotePostRequest{
+  optional int32 post_id = 1;
+  optional bool vote = 2; // true = upvote, false = downvote
+}
+
+//wrapped Post output for vote post
+message VotePostRespond {
+  optional Post post = 1;
+}
+
+message GetPostRequest{
+  optional int32 post_id = 1;
+}
+
+//wrapped Post output for get post
+message GetPostRespond {
+  optional Post post = 1;
+}
+
+//wrapped Comment input for create comment
+message CreateCommentRequest {
+  optional Comment comment = 1;
+}
+
+//wrapped Comment output for create comment
+message CreatePostRespond {
+  optional Comment comment = 1;
+}
+
+message VoteCommentRequest{
+  optional int32 comment_id = 1;
+  optional bool vote = 2; // true = upvote, false = downvote
+}
+
+//wrapped Comment output for vote comment
+message VoteCommentRespond {
+  optional Comment comment = 1;
+}
+
+message MostUpvoteCommentRequest{
+  optional int32 mostN = 1; 
+}
+
+message MostUpvoteCommentRespond{
+  optional Comment comment = 1;
+  optional bool has_replies = 2; 
+}
+
+message ExpandReplyRequest{
+  optional int32 comment_id = 1;
+  optional int32 mostN = 2; 
+}
+
+message ExpandReplyRespond{
+  optional Comment comment = 1;
+  repeated CommentWithReply reply = 2 
+}
+
+message CommentWithReply{
+  optional Comment comment = 1;
+  repeated Comment reply = 2 
 }

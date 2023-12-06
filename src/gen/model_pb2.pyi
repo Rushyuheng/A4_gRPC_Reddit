@@ -1,4 +1,3 @@
-from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
@@ -37,8 +36,8 @@ class Post(_message.Message):
     author: User
     score: int
     state: Post.PostState
-    publication_date: _timestamp_pb2.Timestamp
-    def __init__(self, title: _Optional[str] = ..., text: _Optional[str] = ..., video_url: _Optional[str] = ..., image_url: _Optional[str] = ..., author: _Optional[_Union[User, _Mapping]] = ..., score: _Optional[int] = ..., state: _Optional[_Union[Post.PostState, str]] = ..., publication_date: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    publication_date: str
+    def __init__(self, title: _Optional[str] = ..., text: _Optional[str] = ..., video_url: _Optional[str] = ..., image_url: _Optional[str] = ..., author: _Optional[_Union[User, _Mapping]] = ..., score: _Optional[int] = ..., state: _Optional[_Union[Post.PostState, str]] = ..., publication_date: _Optional[str] = ...) -> None: ...
 
 class Comment(_message.Message):
     __slots__ = ["text", "author", "score", "state", "publication_date"]
@@ -57,5 +56,5 @@ class Comment(_message.Message):
     author: User
     score: int
     state: Comment.CommetState
-    publication_date: _timestamp_pb2.Timestamp
-    def __init__(self, text: _Optional[str] = ..., author: _Optional[_Union[User, _Mapping]] = ..., score: _Optional[int] = ..., state: _Optional[_Union[Comment.CommetState, str]] = ..., publication_date: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    publication_date: str
+    def __init__(self, text: _Optional[str] = ..., author: _Optional[_Union[User, _Mapping]] = ..., score: _Optional[int] = ..., state: _Optional[_Union[Comment.CommetState, str]] = ..., publication_date: _Optional[str] = ...) -> None: ...

@@ -4,14 +4,18 @@ package reddit;
 
 import "google/protobuf/timestamp.proto";
 
+
+
 message User {
   optional string user_id = 1;
 }
 
-
 message Post {
-  optional User author = 1;
-  optional int32 score = 2;
+  optional string title = 1;
+  optional string text = 2;
+  optional string URL = 3;
+  optional User author = 4;
+  optional int32 score = 5;
 
   enum PostState {
     POST_STATE_NORMAL = 0;
@@ -19,21 +23,22 @@ message Post {
     POST_STATE_HIDDEN = 2;
   }
 
-  optional PostState state = 3;
-  optional google.protobuf.Timestamp publication_date = 4
+  optional PostState state = 6;
+  optional google.protobuf.Timestamp publication_date = 7
 
 }
 
 message Comment {
-  optional User author = 1;
-  optional int32 score = 2;
+  optional string text = 1;
+  optional User author = 2;
+  optional int32 score = 3;
 
   enum CommetState {
     POST_STATE_NORMAL = 0;
     POST_STATE_HIDDEN = 1;
   }
 
-  optional CommetState state = 3;
-  optional google.protobuf.Timestamp publication_date = 4
+  optional CommetState state = 4;
+  optional google.protobuf.Timestamp publication_date = 5;
 
 }

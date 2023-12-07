@@ -35,11 +35,17 @@ message Comment {
   optional int32 score = 3;
 
   enum CommetState {
-    POST_STATE_NORMAL = 0;
-    POST_STATE_HIDDEN = 1;
+    COMMENT_STATE_NORMAL = 0;
+    COMMENT_STATE_HIDDEN = 1;
   }
 
   optional CommetState state = 4;
   optional string publication_date = 5;
+
+  enum ReplyType {
+    REPLY_TYPE_POST = 0;
+    REPLY_TYPE_COMMENT = 1;
+  }
+  optional int32 replyTo = 6;
 
 }

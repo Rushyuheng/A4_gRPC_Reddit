@@ -40,21 +40,29 @@ class Post(_message.Message):
     def __init__(self, title: _Optional[str] = ..., text: _Optional[str] = ..., video_url: _Optional[str] = ..., image_url: _Optional[str] = ..., author: _Optional[_Union[User, _Mapping]] = ..., score: _Optional[int] = ..., state: _Optional[_Union[Post.PostState, str]] = ..., publication_date: _Optional[str] = ...) -> None: ...
 
 class Comment(_message.Message):
-    __slots__ = ["text", "author", "score", "state", "publication_date"]
+    __slots__ = ["text", "author", "score", "state", "publication_date", "replyTo"]
     class CommetState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
-        POST_STATE_NORMAL: _ClassVar[Comment.CommetState]
-        POST_STATE_HIDDEN: _ClassVar[Comment.CommetState]
-    POST_STATE_NORMAL: Comment.CommetState
-    POST_STATE_HIDDEN: Comment.CommetState
+        COMMENT_STATE_NORMAL: _ClassVar[Comment.CommetState]
+        COMMENT_STATE_HIDDEN: _ClassVar[Comment.CommetState]
+    COMMENT_STATE_NORMAL: Comment.CommetState
+    COMMENT_STATE_HIDDEN: Comment.CommetState
+    class ReplyType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = []
+        REPLY_TYPE_POST: _ClassVar[Comment.ReplyType]
+        REPLY_TYPE_COMMENT: _ClassVar[Comment.ReplyType]
+    REPLY_TYPE_POST: Comment.ReplyType
+    REPLY_TYPE_COMMENT: Comment.ReplyType
     TEXT_FIELD_NUMBER: _ClassVar[int]
     AUTHOR_FIELD_NUMBER: _ClassVar[int]
     SCORE_FIELD_NUMBER: _ClassVar[int]
     STATE_FIELD_NUMBER: _ClassVar[int]
     PUBLICATION_DATE_FIELD_NUMBER: _ClassVar[int]
+    REPLYTO_FIELD_NUMBER: _ClassVar[int]
     text: str
     author: User
     score: int
     state: Comment.CommetState
     publication_date: str
-    def __init__(self, text: _Optional[str] = ..., author: _Optional[_Union[User, _Mapping]] = ..., score: _Optional[int] = ..., state: _Optional[_Union[Comment.CommetState, str]] = ..., publication_date: _Optional[str] = ...) -> None: ...
+    replyTo: int
+    def __init__(self, text: _Optional[str] = ..., author: _Optional[_Union[User, _Mapping]] = ..., score: _Optional[int] = ..., state: _Optional[_Union[Comment.CommetState, str]] = ..., publication_date: _Optional[str] = ..., replyTo: _Optional[int] = ...) -> None: ...

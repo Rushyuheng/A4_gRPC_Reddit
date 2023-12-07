@@ -94,7 +94,7 @@ class mockDB:
             }
         ]
         
-        self.commet = [
+        self.comment = [
             {
                 "id":0,
                 "text": "what the heck is this",

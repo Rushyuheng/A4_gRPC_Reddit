@@ -71,10 +71,12 @@ class VoteCommentRespond(_message.Message):
     def __init__(self, comment: _Optional[_Union[_model_pb2.Comment, _Mapping]] = ...) -> None: ...
 
 class MostUpvoteCommentRequest(_message.Message):
-    __slots__ = ["mostN"]
+    __slots__ = ["mostN", "post_id"]
     MOSTN_FIELD_NUMBER: _ClassVar[int]
+    POST_ID_FIELD_NUMBER: _ClassVar[int]
     mostN: int
-    def __init__(self, mostN: _Optional[int] = ...) -> None: ...
+    post_id: int
+    def __init__(self, mostN: _Optional[int] = ..., post_id: _Optional[int] = ...) -> None: ...
 
 class MostUpvoteCommentRespond(_message.Message):
     __slots__ = ["comment", "has_replies"]
@@ -101,9 +103,7 @@ class ExpandReplyRespond(_message.Message):
     def __init__(self, comment: _Optional[_Union[_model_pb2.Comment, _Mapping]] = ..., reply: _Optional[_Iterable[_Union[CommentWithReply, _Mapping]]] = ...) -> None: ...
 
 class CommentWithReply(_message.Message):
-    __slots__ = ["comment", "reply"]
+    __slots__ = ["comment"]
     COMMENT_FIELD_NUMBER: _ClassVar[int]
-    REPLY_FIELD_NUMBER: _ClassVar[int]
     comment: _model_pb2.Comment
-    reply: _containers.RepeatedCompositeFieldContainer[_model_pb2.Comment]
-    def __init__(self, comment: _Optional[_Union[_model_pb2.Comment, _Mapping]] = ..., reply: _Optional[_Iterable[_Union[_model_pb2.Comment, _Mapping]]] = ...) -> None: ...
+    def __init__(self, comment: _Optional[_Union[_model_pb2.Comment, _Mapping]] = ...) -> None: ...

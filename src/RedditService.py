@@ -126,7 +126,7 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
 
         #create new DB record
         new_comment_record = {
-            "id": len(self.mockDB.commet),
+            "id": len(self.mockDB.comment),
             "text": request_comment.text,
             "author": request_comment.author.user_id,
             "score": 0,
@@ -136,10 +136,10 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
             "reply_to": request_comment.reply_to,
         }
         #insert into DB
-        self.mockDB.commet.append(new_comment_record)
+        self.mockDB.comment.append(new_comment_record)
 
         #DEBUG
-        print(self.mockDB.commet[-1])
+        print(self.mockDB.comment[-1])
 
         respond_comment = self.ConstructCommentFromDBRecord(new_comment_record)
 
@@ -147,7 +147,7 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
     
     def VoteComment(self, request, context):
         #filter the post record in the database
-        comment_record = next(filter(lambda record: record['id'] == request.comment_id, self.mockDB.commet))
+        comment_record = next(filter(lambda record: record['id'] == request.comment_id, self.mockDB.comment))
 
         if(request.vote):
             #upvote

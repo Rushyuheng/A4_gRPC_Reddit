@@ -64,7 +64,8 @@ message VoteCommentRespond {
 }
 
 message MostUpvoteCommentRequest{
-  optional int32 mostN = 1; 
+  optional int32 mostN = 1;
+  optional int32 post_id = 2; 
 }
 
 message MostUpvoteCommentRespond{
@@ -84,5 +85,4 @@ message ExpandReplyRespond{
 
 message CommentWithReply{
   optional Comment comment = 1;
-  repeated Comment reply = 2;
 }

@@ -40,7 +40,7 @@ class Post(_message.Message):
     def __init__(self, title: _Optional[str] = ..., text: _Optional[str] = ..., video_url: _Optional[str] = ..., image_url: _Optional[str] = ..., author: _Optional[_Union[User, _Mapping]] = ..., score: _Optional[int] = ..., state: _Optional[_Union[Post.PostState, str]] = ..., publication_date: _Optional[str] = ...) -> None: ...
 
 class Comment(_message.Message):
-    __slots__ = ["text", "author", "score", "state", "publication_date", "replyTo"]
+    __slots__ = ["text", "author", "score", "state", "publication_date", "reply_type", "reply_to"]
     class CommetState(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = []
         COMMENT_STATE_NORMAL: _ClassVar[Comment.CommetState]
@@ -58,11 +58,13 @@ class Comment(_message.Message):
     SCORE_FIELD_NUMBER: _ClassVar[int]
     STATE_FIELD_NUMBER: _ClassVar[int]
     PUBLICATION_DATE_FIELD_NUMBER: _ClassVar[int]
-    REPLYTO_FIELD_NUMBER: _ClassVar[int]
+    REPLY_TYPE_FIELD_NUMBER: _ClassVar[int]
+    REPLY_TO_FIELD_NUMBER: _ClassVar[int]
     text: str
     author: User
     score: int
     state: Comment.CommetState
     publication_date: str
-    replyTo: int
-    def __init__(self, text: _Optional[str] = ..., author: _Optional[_Union[User, _Mapping]] = ..., score: _Optional[int] = ..., state: _Optional[_Union[Comment.CommetState, str]] = ..., publication_date: _Optional[str] = ..., replyTo: _Optional[int] = ...) -> None: ...
+    reply_type: Comment.ReplyType
+    reply_to: int
+    def __init__(self, text: _Optional[str] = ..., author: _Optional[_Union[User, _Mapping]] = ..., score: _Optional[int] = ..., state: _Optional[_Union[Comment.CommetState, str]] = ..., publication_date: _Optional[str] = ..., reply_type: _Optional[_Union[Comment.ReplyType, str]] = ..., reply_to: _Optional[int] = ...) -> None: ...

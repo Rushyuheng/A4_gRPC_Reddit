@@ -46,6 +46,7 @@ message Comment {
     REPLY_TYPE_POST = 0;
     REPLY_TYPE_COMMENT = 1;
   }
-  optional int32 replyTo = 6;
+  optional ReplyType reply_type = 6;
+  optional int32 reply_to = 7;
 
 }

@@ -50,6 +50,24 @@ class RedditClient:
         # Process the response received from the server
         print("Received response:", response)
 
+    def create_comment(self, user_id:str, text:str, reply_to:int, reply_type:int):
+        # Create a request message
+        author = model_pb2.User(user_id=user_id)
+        comment = model_pb2.Comment(text=text, reply_to=reply_to, author=author)
+        if(reply_type == 1):
+            comment.reply_type = model_pb2.Comment.ReplyType.REPLY_TYPE_POST
+        else:
+            comment.reply_type = model_pb2.Comment.ReplyType.REPLY_TYPE_COMMENT
+
+        # wrap post
+        request = service_pb2.CreateCommentRequest(comment=comment)
+
+        # Make the gRPC call by invoking the service method with the request
+        response = self.stub.CreateComment(request)
+
+        # Process the response received from the server
+        print("Received response:", response)
+
 if __name__ == '__main__':
     if(len(sys.argv) <= 1):
         print("Empty Port argument, using default port 50051")
@@ -71,4 +89,5 @@ if __name__ == '__main__':
     client.start_connection(port)
     #client.create_post("rush", "new meme", "lol", "www.meme.doogi")
     #client.vote_post(0,True)
-    client.get_post(2)
+    #client.get_post(2)
+    client.create_comment("james","lollol",0,0)

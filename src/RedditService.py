@@ -105,7 +105,7 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
 
         respond_post = self.ConstructPostFromDBRecord(post_record)
 
-        return service_pb2.CreatePostRespond(post=respond_post)
+        return service_pb2.VotePostRespond(post=respond_post)
     
     def GetPost(self, request, context):
         #filter the post record in the database
@@ -113,7 +113,7 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
 
         respond_post = self.ConstructPostFromDBRecord(post_record)
 
-        return service_pb2.CreatePostRespond(post=respond_post)
+        return service_pb2.GetPostRespond(post=respond_post)
     
     def CreateComment(self, request, context):
         #discard wrapper 
@@ -144,3 +144,19 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
         respond_comment = self.ConstructCommentFromDBRecord(new_comment_record)
 
         return service_pb2.CreateCommentRespond(comment=respond_comment)
+    
+    def VoteComment(self, request, context):
+        #filter the post record in the database
+        comment_record = next(filter(lambda record: record['id'] == request.comment_id, self.mockDB.commet))
+
+        if(request.vote):
+            #upvote
+            comment_record['score'] += 1 
+        else:
+            #downvote
+            comment_record['score'] -= 1
+
+
+        respond_comment = self.ConstructCommentFromDBRecord(comment_record)
+
+        return service_pb2.VoteCommentRespond(comment=respond_comment)

@@ -68,7 +68,6 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
     def VotePost(self, request, context):
         #filter the post record in the database
         post_record = next(filter(lambda record: record['id'] == request.post_id, self.mockDB.post))
-        print(type(post_record))
 
         if(request.vote):
             #upvote
@@ -77,8 +76,14 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
             #downvote
             post_record['score'] -= 1
 
-        #DEBUG
-        print(self.mockDB.post[-1])
+
+        respond_post = self.ConstrunctPostFromDB(post_record)
+
+        return service_pb2.CreatePostRespond(post=respond_post)
+    
+    def GetPost(self, request, context):
+        #filter the post record in the database
+        post_record = next(filter(lambda record: record['id'] == request.post_id, self.mockDB.post))
 
         respond_post = self.ConstrunctPostFromDB(post_record)
 

@@ -39,10 +39,20 @@ class RedditClient:
 
         # Process the response received from the server
         print("Received response:", response)
+    
+    def get_post(self, post_id:int):
+        # Create a request message
+        request = service_pb2.GetPostRequest(post_id=post_id)
+
+        # Make the gRPC call by invoking the service method with the request
+        response = self.stub.VotePost(request)
+
+        # Process the response received from the server
+        print("Received response:", response)
 
 if __name__ == '__main__':
     if(len(sys.argv) <= 1):
-        print("Invalid Port, using default port 50051")
+        print("Empty Port argument, using default port 50051")
         port = "50051"
     else:
         port = str(sys.argv[1])
@@ -60,4 +70,5 @@ if __name__ == '__main__':
     client = RedditClient()
     client.start_connection(port)
     #client.create_post("rush", "new meme", "lol", "www.meme.doogi")
-    client.vote_post(0,True)
+    #client.vote_post(0,True)
+    client.get_post(2)

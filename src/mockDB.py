@@ -12,6 +12,11 @@ class CommentState(Enum):
     POST_STATE_NORMAL = 0
     POST_STATE_HIDDEN = 1
 
+# Define an enum for UrlType
+class UrlType(Enum):
+    VIDEO = 0
+    IMAGE = 1
+
 class mockDB:
     def __init__(self) -> None:
         self.users = [
@@ -31,6 +36,7 @@ class mockDB:
                 "id":0,
                 "title": "Title 1",
                 "text": "Text for post 1",
+                "url_type": UrlType.VIDEO,
                 "url": "https://example.com/video/1",
                 "author": "rush", 
                 "score": 0,
@@ -41,6 +47,7 @@ class mockDB:
                 "id":1,
                 "title": "Title 2",
                 "text": "Text for post 2",
+                "url_type": UrlType.IMAGE,
                 "url": "https://example.com/image/2",
                 "author": "james", 
                 "score": -10,
@@ -51,6 +58,7 @@ class mockDB:
                 "id":2,
                 "title": "Title 3",
                 "text": "Text for post 3",
+                "url_type": UrlType.VIDEO,
                 "url": "https://example.com/video/3",
                 "author": "james", 
                 "score": 25,
@@ -61,6 +69,7 @@ class mockDB:
                 "id":3,
                 "title": "Title 4",
                 "text": "Text for post 4",
+                "url_type": UrlType.IMAGE,
                 "url": "https://example.com/image/4",
                 "author": "coco", 
                 "score": -9,
@@ -71,6 +80,7 @@ class mockDB:
                 "id":4,
                 "title": "Title 5",
                 "text": "Text for post 5",
+                "url_type": UrlType.VIDEO,
                 "url": "https://example.com/video/5",
                 "author": "rush", 
                 "score": 30,

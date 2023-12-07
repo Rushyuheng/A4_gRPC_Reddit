@@ -1,5 +1,5 @@
 from concurrent import futures
-
+import sys
 import grpc
 import logging
 import RedditService
@@ -18,7 +18,11 @@ def serve(port:str):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    port = input("Enter the port bewteen 50000 - 50100 to listen on:")
+    if(len(sys.argv) <= 1):
+        print("Empty Port argument, using default port 50051")
+        port = "50051"
+    else:
+        port = str(sys.argv[1])
 
     try:
         port_value = int(port)

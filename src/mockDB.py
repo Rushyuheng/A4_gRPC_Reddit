@@ -217,12 +217,12 @@ class mockDB:
             },
             {
                 "id": 12,
-                "text": "what the heck is this",
+                "text": "not bad",
                 "author": "rush",
                 "score": 12,
                 "state": CommentState.COMMENT_STATE_NORMAL,
                 "publication_date": "2014-08-01",
-                "reply_type": ReplyType.REPLY_TYPE_COMMENT,
+                "reply_type": ReplyType.REPLY_TYPE_POST,
                 "reply_to": 0,
             },
         ]

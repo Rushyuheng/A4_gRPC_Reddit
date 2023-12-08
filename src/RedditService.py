@@ -160,3 +160,23 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
         respond_comment = self.ConstructCommentFromDBRecord(comment_record)
 
         return service_pb2.VoteCommentRespond(comment=respond_comment)
+    
+    def GetMostUpvoteComment(self, request, context):
+        #fetch comments that is reply to a given post
+        comment_records = list(filter(lambda record: record['reply_type'] == mockDB.ReplyType.REPLY_TYPE_POST and
+                                     record['reply_to'] == request.post_id, self.mockDB.comment))
+        #sort the comments base on its score
+        comment_records = sorted(comment_records, key=lambda record: record['score'], reverse=True)
+
+        # comment_records can has less records than mostN
+        return_len = min(request.mostN, len(comment_records))
+        #return the list of comment
+        for i in range(return_len):
+            respond_comment = self.ConstructCommentFromDBRecord(comment_records[i])
+            has_reply = False
+            comments_reply_to_this = list(filter(lambda record: record['reply_type'] == mockDB.ReplyType.REPLY_TYPE_COMMENT and
+                                     record['reply_to'] == comment_records[i]['id'], self.mockDB.comment))
+            
+            if(len(comments_reply_to_this) > 0):
+                has_reply = True
+            yield service_pb2.MostUpvoteCommentRespond(comment=respond_comment, has_replies=has_reply)

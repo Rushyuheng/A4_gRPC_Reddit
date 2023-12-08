@@ -78,6 +78,17 @@ class RedditClient:
 
         # Process the response received from the server
         print("Received response:", response)
+    
+    def get_most_upvote_comment(self, post_id:int, mostN: int):
+        # Create a request message
+        request = service_pb2.MostUpvoteCommentRequest(post_id=post_id,mostN=mostN)
+
+        # Make the gRPC call by invoking the service method with the request
+        responses = self.stub.GetMostUpvoteComment(request)
+
+        # Process the response received from the server
+        for response in responses:
+            print("Received response:", response)
 
 if __name__ == '__main__':
     if(len(sys.argv) <= 1):
@@ -98,8 +109,9 @@ if __name__ == '__main__':
 
     client = RedditClient()
     client.start_connection(port)
-    client.create_post("rush", "new meme", "lol", "www.meme.doogi")
-    client.vote_post(0,True)
-    client.get_post(2)
-    client.create_comment("james","lollol",0,0)
-    client.vote_comment(5,False)
+    #client.create_post("rush", "new meme", "lol", "www.meme.doogi")
+    #client.vote_post(0,True)
+    #client.get_post(2)
+    #client.create_comment("james","lollol",0,0)
+    #client.vote_comment(5,False)
+    client.get_most_upvote_comment(0,5)

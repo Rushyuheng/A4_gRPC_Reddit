@@ -80,9 +80,6 @@ message ExpandReplyRequest{
 
 message ExpandReplyRespond{
   optional Comment comment = 1;
-  repeated CommentWithReply reply = 2;
+  repeated Comment reply = 2;
 }
 
-message CommentWithReply{
-  optional Comment comment = 1;
-}

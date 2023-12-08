@@ -89,6 +89,18 @@ class RedditClient:
         # Process the response received from the server
         for response in responses:
             print("Received response:", response)
+    
+    def expand_branch(self, comment_id:int, mostN:int):
+        # Create a request message
+        request = service_pb2.ExpandReplyRequest(comment_id=comment_id, mostN=mostN)
+
+        # Make the gRPC call by invoking the service method with the request
+        responses = self.stub.ExpandReply(request)
+
+        # Process the response received from the server
+        for response in responses:
+            print("Received response:", response)
+
 
 if __name__ == '__main__':
     if(len(sys.argv) <= 1):
@@ -100,10 +112,10 @@ if __name__ == '__main__':
     try:
         port_value = int(port)
         if port_value < 50000 or port_value > 50100:
-            print("Invalid Port, using default port 50051")
+            print("Invalid Port, please use port between 50000-50100, using default port 50051 now")
             port = "50051"
     except ValueError:
-        print("Invalid Port, using default port 50051")
+        print("Invalid Port, please use port between 50000-50100, using default port 50051 now")
         port = "50051"
 
 
@@ -114,4 +126,5 @@ if __name__ == '__main__':
     #client.get_post(2)
     #client.create_comment("james","lollol",0,0)
     #client.vote_comment(5,False)
-    client.get_most_upvote_comment(0,5)
+    #client.get_most_upvote_comment(0,5)
+    client.expand_branch(4,5)

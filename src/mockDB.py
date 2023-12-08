@@ -197,23 +197,23 @@ class mockDB:
             },
             {
                 "id": 10,
-                "text": "not fun",
+                "text": "not fun at all",
                 "author": "james",
                 "score": -3,
                 "state": CommentState.COMMENT_STATE_HIDDEN,
                 "publication_date": "1999-07-09",
                 "reply_type": ReplyType.REPLY_TYPE_COMMENT,
-                "reply_to": 0,
+                "reply_to": 6,
             },
             {
                 "id": 11,
-                "text": "love the post",
+                "text": "love the comment",
                 "author": "coco",
                 "score": 32,
                 "state": CommentState.COMMENT_STATE_NORMAL,
                 "publication_date": "2012-03-25",
                 "reply_type": ReplyType.REPLY_TYPE_COMMENT,
-                "reply_to": 1,
+                "reply_to": 6,
             },
             {
                 "id": 12,
@@ -223,7 +223,7 @@ class mockDB:
                 "state": CommentState.COMMENT_STATE_NORMAL,
                 "publication_date": "2014-08-01",
                 "reply_type": ReplyType.REPLY_TYPE_POST,
-                "reply_to": 0,
+                "reply_to": 6,
             },
         ]
 

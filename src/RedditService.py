@@ -180,3 +180,29 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
             if(len(comments_reply_to_this) > 0):
                 has_reply = True
             yield service_pb2.MostUpvoteCommentRespond(comment=respond_comment, has_replies=has_reply)
+
+    def ExpandReply(self, request, context):
+        #fetch comments that is reply to a comment post
+        comment_records = list(filter(lambda record: record['reply_type'] == mockDB.ReplyType.REPLY_TYPE_COMMENT and
+                                     record['reply_to'] == request.comment_id, self.mockDB.comment))
+        
+        #sort the comments base on its score
+        comment_records = sorted(comment_records, key=lambda record: record['score'], reverse=True)
+
+        # comment_records can has less records than mostN
+        return_len = min(request.mostN, len(comment_records))
+
+        for i in range(return_len):
+            respond_comment = self.ConstructCommentFromDBRecord(comment_records[i])
+            comments_reply_to_this = list(filter(lambda record: record['reply_type'] == mockDB.ReplyType.REPLY_TYPE_COMMENT and
+                                     record['reply_to'] == comment_records[i]['id'], self.mockDB.comment))
+            
+            respond_reply = []
+            if(len(comments_reply_to_this) > 0):
+                repeat_reply_len =  min(request.mostN, len(comments_reply_to_this))
+                for j in range(repeat_reply_len):
+                    respond_reply.append(self.ConstructCommentFromDBRecord(comments_reply_to_this[j]))
+            else:
+                respond_reply = None
+
+            yield service_pb2.ExpandReplyRespond(comment=respond_comment, reply=respond_reply)

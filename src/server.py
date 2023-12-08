@@ -27,10 +27,10 @@ if __name__ == "__main__":
     try:
         port_value = int(port)
         if port_value < 50000 or port_value > 50100:
-            print("Invalid Port, using default port 50051")
+            print("Invalid Port, please use port between 50000-50100, using default port 50051 now")
             port = "50051"
     except ValueError:
-        print("Invalid Port, using default port 50051")
+        print("Invalid Port, please use port between 50000-50100, using default port 50051 now")
         port = "50051"
 
 

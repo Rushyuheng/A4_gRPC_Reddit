@@ -99,11 +99,5 @@ class ExpandReplyRespond(_message.Message):
     COMMENT_FIELD_NUMBER: _ClassVar[int]
     REPLY_FIELD_NUMBER: _ClassVar[int]
     comment: _model_pb2.Comment
-    reply: _containers.RepeatedCompositeFieldContainer[CommentWithReply]
-    def __init__(self, comment: _Optional[_Union[_model_pb2.Comment, _Mapping]] = ..., reply: _Optional[_Iterable[_Union[CommentWithReply, _Mapping]]] = ...) -> None: ...
-
-class CommentWithReply(_message.Message):
-    __slots__ = ["comment"]
-    COMMENT_FIELD_NUMBER: _ClassVar[int]
-    comment: _model_pb2.Comment
-    def __init__(self, comment: _Optional[_Union[_model_pb2.Comment, _Mapping]] = ...) -> None: ...
+    reply: _containers.RepeatedCompositeFieldContainer[_model_pb2.Comment]
+    def __init__(self, comment: _Optional[_Union[_model_pb2.Comment, _Mapping]] = ..., reply: _Optional[_Iterable[_Union[_model_pb2.Comment, _Mapping]]] = ...) -> None: ...

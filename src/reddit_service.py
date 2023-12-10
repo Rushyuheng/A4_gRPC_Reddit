@@ -12,7 +12,8 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
         #start a new mock DB
         self.mock_db = mock_db.MockDB()
 
-    def ConstructPostFromDBRecord(self,db_post_record) -> dict:
+    @staticmethod
+    def construct_post_from_dbrecord(db_post_record) -> dict:
 
 
         respond_post = model_pb2.Post(title=db_post_record['title'],
@@ -35,7 +36,8 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
 
         return respond_post
     
-    def ConstructCommentFromDBRecord(self,db_comment_record) -> dict:
+    @staticmethod
+    def construct_comment_from_dbrecord(db_comment_record) -> dict:
         respond_comment = model_pb2.Comment(text=db_comment_record['text'],
                                             author=model_pb2.User(user_id=db_comment_record['author']),
                                             score= db_comment_record['score'],
@@ -86,7 +88,7 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
         #DEBUG
         print(self.mock_db.post[-1])
 
-        respond_post = self.ConstructPostFromDBRecord(new_post_record)
+        respond_post = self.construct_post_from_dbrecord(new_post_record)
 
         return service_pb2.CreatePostRespond(post=respond_post)
             
@@ -102,7 +104,7 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
             post_record['score'] -= 1
 
 
-        respond_post = self.ConstructPostFromDBRecord(post_record)
+        respond_post = self.construct_post_from_dbrecord(post_record)
 
         return service_pb2.VotePostRespond(post=respond_post)
     
@@ -110,7 +112,7 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
         #filter the post record in the database
         post_record = next(filter(lambda record: record['id'] == request.post_id, self.mock_db.post))
 
-        respond_post = self.ConstructPostFromDBRecord(post_record)
+        respond_post = self.construct_post_from_dbrecord(post_record)
 
         return service_pb2.GetPostRespond(post=respond_post)
     
@@ -140,7 +142,7 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
         #DEBUG
         print(self.mock_db.comment[-1])
 
-        respond_comment = self.ConstructCommentFromDBRecord(new_comment_record)
+        respond_comment = self.construct_comment_from_dbrecord(new_comment_record)
 
         return service_pb2.CreateCommentRespond(comment=respond_comment)
     
@@ -156,7 +158,7 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
             comment_record['score'] -= 1
 
 
-        respond_comment = self.ConstructCommentFromDBRecord(comment_record)
+        respond_comment = self.construct_comment_from_dbrecord(comment_record)
 
         return service_pb2.VoteCommentRespond(comment=respond_comment)
     
@@ -171,7 +173,7 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
         return_len = min(request.mostN, len(comment_records))
         #return the list of comment
         for i in range(return_len):
-            respond_comment = self.ConstructCommentFromDBRecord(comment_records[i])
+            respond_comment = self.construct_comment_from_dbrecord(comment_records[i])
             has_reply = False
             comments_reply_to_this = list(filter(lambda record: record['reply_type'] == mock_db.ReplyType.REPLY_TYPE_COMMENT and
                                      record['reply_to'] == comment_records[i]['id'], self.mock_db.comment))
@@ -192,7 +194,7 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
         return_len = min(request.mostN, len(comment_records))
 
         for i in range(return_len):
-            respond_comment = self.ConstructCommentFromDBRecord(comment_records[i])
+            respond_comment = self.construct_comment_from_dbrecord(comment_records[i])
             comments_reply_to_this = list(filter(lambda record: record['reply_type'] == mock_db.ReplyType.REPLY_TYPE_COMMENT and
                                      record['reply_to'] == comment_records[i]['id'], self.mock_db.comment))
             
@@ -200,7 +202,7 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
             if(len(comments_reply_to_this) > 0):
                 repeat_reply_len =  min(request.mostN, len(comments_reply_to_this))
                 for j in range(repeat_reply_len):
-                    respond_reply.append(self.ConstructCommentFromDBRecord(comments_reply_to_this[j]))
+                    respond_reply.append(self.construct_comment_from_dbrecord(comments_reply_to_this[j]))
             else:
                 respond_reply = None
 

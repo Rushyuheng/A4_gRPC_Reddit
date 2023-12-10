@@ -119,13 +119,13 @@ if __name__ == '__main__':
         print("Invalid Port, please use port between 50000-50100, using default port 50051 now")
         port = "50051"
 
-
+    #DEBUG
     client = RedditClient(port)
     client.start_connection()
-    #client.create_post("rush", "new meme", "lol", "www.meme.doogi")
-    #client.vote_post(0,True)
-    #client.get_post(2)
-    #client.create_comment("james","lollol",0,0)
-    #client.vote_comment(5,False)
+    print(client.create_post("rush", "new meme", "lol", "www.meme.doogi"))
+    print(client.vote_post(0,True))
+    print(client.get_post(2))
+    print(client.create_comment("james","lollol",0,0))
+    print(client.vote_comment(5,False))
     print(client.get_most_upvote_comment(0,5))
-    #client.expand_branch(4,5)
+    print(client.expand_branch(4,5))

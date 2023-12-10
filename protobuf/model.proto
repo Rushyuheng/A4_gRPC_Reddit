@@ -7,16 +7,17 @@ message User {
 }
 
 message Post {
-  optional string title = 1;
-  optional string text = 2;
+  optional int32 post_id = 1;
+  optional string title = 2;
+  optional string text = 3;
 
   oneof url {
-    string video_url = 3;
-    string image_url = 4;
+    string video_url = 4;
+    string image_url = 5;
   }
 
-  optional User author = 5;
-  optional int32 score = 6;
+  optional User author = 6;
+  optional int32 score = 7;
 
   enum PostState {
     POST_STATE_NORMAL = 0;
@@ -24,29 +25,30 @@ message Post {
     POST_STATE_HIDDEN = 2;
   }
 
-  optional PostState state = 7;
-  optional string publication_date = 8;
+  optional PostState state = 8;
+  optional string publication_date = 9;
 
 }
 
 message Comment {
-  optional string text = 1;
-  optional User author = 2;
-  optional int32 score = 3;
+  optional int32 comment_id = 1;
+  optional string text = 2;
+  optional User author = 3;
+  optional int32 score = 4;
 
   enum CommetState {
     COMMENT_STATE_NORMAL = 0;
     COMMENT_STATE_HIDDEN = 1;
   }
 
-  optional CommetState state = 4;
-  optional string publication_date = 5;
+  optional CommetState state = 5;
+  optional string publication_date = 6;
 
   enum ReplyType {
     REPLY_TYPE_POST = 0;
     REPLY_TYPE_COMMENT = 1;
   }
-  optional ReplyType reply_type = 6;
-  optional int32 reply_to = 7;
+  optional ReplyType reply_type = 7;
+  optional int32 reply_to = 8;
 
 }

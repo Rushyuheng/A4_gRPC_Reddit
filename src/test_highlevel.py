@@ -32,7 +32,7 @@ class TestHighLevel(TestCase):
         #create mock instance
         mock_client = Mock()
         #stub mock return
-        mock_client.get_most_upvote_comment.return_value = RedditServicer.construct_comment_from_dbrecord(self.mock_db.comment[0])
+        mock_client.get_most_upvote_comment.return_value = [RedditServicer.construct_comment_from_dbrecord(self.mock_db.comment[0])]
 
         #function parameter
         post_id = 0
@@ -42,6 +42,24 @@ class TestHighLevel(TestCase):
 
         #verify
         mock_client.get_most_upvote_comment.assert_called_with(post_id,1)
+
+    # test if expand_most_upvote_comment fetch the most upvote command and invoke expand_branch with that comment id
+    def test_expand_most_upvote_comment(self) -> None:
+        #set up
+        #create mock instance
+        mock_client = Mock()
+        #stub mock return
+        mock_client.get_most_upvote_comment.return_value = [RedditServicer.construct_comment_from_dbrecord(self.mock_db.comment[0])]
+        mock_client.expand_branch.return_value = [RedditServicer.construct_comment_from_dbrecord(self.mock_db.comment[4])]
+        #function parameter
+        post_id = 0
+
+        #execution
+        self.system_under_test.expand_most_upvote_comment(mock_client,post_id)
+
+        #verify
+        mock_client.get_most_upvote_comment.assert_called_with(post_id,1)
+        mock_client.expand_branch.assert_called_with(self.mock_db.comment[0]['id'],5)
 
 
 if __name__ == '__main__':

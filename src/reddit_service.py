@@ -16,7 +16,8 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
     def construct_post_from_dbrecord(db_post_record) -> dict:
 
 
-        respond_post = model_pb2.Post(title=db_post_record['title'],
+        respond_post = model_pb2.Post(post_id=db_post_record['id'],
+                                        title=db_post_record['title'],
                                         text=db_post_record['text'],
                                         author=model_pb2.User(user_id=db_post_record['author']),
                                         score= db_post_record['score'],
@@ -38,7 +39,8 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
     
     @staticmethod
     def construct_comment_from_dbrecord(db_comment_record) -> dict:
-        respond_comment = model_pb2.Comment(text=db_comment_record['text'],
+        respond_comment = model_pb2.Comment(comment_id= db_comment_record['id'],
+                                            text=db_comment_record['text'],
                                             author=model_pb2.User(user_id=db_comment_record['author']),
                                             score= db_comment_record['score'],
                                             state= model_pb2.Comment.CommetState.COMMENT_STATE_NORMAL,

@@ -79,5 +79,6 @@ class TestHighLevel(TestCase):
         #verify
         mock_client.get_most_upvote_comment.assert_called_with(post_id,1)
         mock_client.expand_branch.assert_called_with(self.mock_db.comment[0]['id'],1)
+        
 if __name__ == '__main__':
     main()

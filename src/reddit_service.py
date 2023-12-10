@@ -87,9 +87,6 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
         #insert into DB
         self.mock_db.post.append(new_post_record)
 
-        #DEBUG
-        print(self.mock_db.post[-1])
-
         respond_post = self.construct_post_from_dbrecord(new_post_record)
 
         return service_pb2.CreatePostRespond(post=respond_post)
@@ -140,9 +137,6 @@ class RedditServicer(service_pb2_grpc.RedditServicer):
         }
         #insert into DB
         self.mock_db.comment.append(new_comment_record)
-
-        #DEBUG
-        print(self.mock_db.comment[-1])
 
         respond_comment = self.construct_comment_from_dbrecord(new_comment_record)
 

@@ -1,9 +1,10 @@
-from gen import model_pb2
 from highlevel import HighLevel
 from unittest import TestCase, main
 from unittest.mock import patch, Mock
 from mock_db import MockDB
 from reddit_service import RedditServicer
+
+
 class TestHighLevel(TestCase):
     def setUp(self) -> None:
         self.system_under_test = HighLevel()
@@ -61,6 +62,22 @@ class TestHighLevel(TestCase):
         mock_client.get_most_upvote_comment.assert_called_with(post_id,1)
         mock_client.expand_branch.assert_called_with(self.mock_db.comment[0]['id'],5)
 
+        #test if return_most_upvote_reply fetch the most upvote command, expand the list then return the most upvote reply
+    def test_return_most_upvote_reply(self) -> None:
+        #set up
+        #create mock instance
+        mock_client = Mock()
+        #stub mock return
+        mock_client.get_most_upvote_comment.return_value = [RedditServicer.construct_comment_from_dbrecord(self.mock_db.comment[0])]
+        mock_client.expand_branch.return_value = [RedditServicer.construct_comment_from_dbrecord(self.mock_db.comment[4])]
+        #function parameter
+        post_id = 0
 
+        #execution
+        self.system_under_test.return_most_upvote_reply(mock_client,post_id)
+
+        #verify
+        mock_client.get_most_upvote_comment.assert_called_with(post_id,1)
+        mock_client.expand_branch.assert_called_with(self.mock_db.comment[0]['id'],1)
 if __name__ == '__main__':
     main()

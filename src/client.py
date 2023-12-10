@@ -6,13 +6,14 @@ from gen import service_pb2
 from gen import model_pb2
 
 class RedditClient:
-    def __init__(self):
+    def __init__(self, port):
         self.channel = None
         self.stub = None
+        self.port = port
 
-    def start_connection(self,port):
+    def start_connection(self):
         # Create a gRPC channel to the server (assuming server running at localhost:50051)
-        self.channel = grpc.insecure_channel('localhost:' + port)
+        self.channel = grpc.insecure_channel('localhost:' + self.port)
 
         # Create a stub (client) to interact with the server
         self.stub = service_pb2_grpc.RedditStub(self.channel)
@@ -29,7 +30,7 @@ class RedditClient:
         response = self.stub.CreatePost(request)
 
         # Process the response received from the server
-        print("Received response:", response)
+        return response.post
     
     def vote_post(self, post_id:int, vote:bool):
         # Create a request message
@@ -39,7 +40,7 @@ class RedditClient:
         response = self.stub.VotePost(request)
 
         # Process the response received from the server
-        print("Received response:", response)
+        return response.post
     
     def get_post(self, post_id:int):
         # Create a request message
@@ -49,7 +50,7 @@ class RedditClient:
         response = self.stub.VotePost(request)
 
         # Process the response received from the server
-        print("Received response:", response)
+        return response.post
 
     def create_comment(self, user_id:str, text:str, reply_to:int, reply_type:int):
         # Create a request message
@@ -67,7 +68,7 @@ class RedditClient:
         response = self.stub.CreateComment(request)
 
         # Process the response received from the server
-        print("Received response:", response)
+        return response.comment
     
     def vote_comment(self, comment_id:int, vote:bool):
         # Create a request message
@@ -77,7 +78,7 @@ class RedditClient:
         response = self.stub.VoteComment(request)
 
         # Process the response received from the server
-        print("Received response:", response)
+        return response.comment
     
     def get_most_upvote_comment(self, post_id:int, mostN: int):
         # Create a request message
@@ -87,8 +88,7 @@ class RedditClient:
         responses = self.stub.GetMostUpvoteComment(request)
 
         # Process the response received from the server
-        for response in responses:
-            print("Received response:", response)
+        return list(responses)
     
     def expand_branch(self, comment_id:int, mostN:int):
         # Create a request message
@@ -98,15 +98,16 @@ class RedditClient:
         responses = self.stub.ExpandReply(request)
 
         # Process the response received from the server
-        for response in responses:
-            print("Received response:", response)
+        return list(responses)
 
 
 if __name__ == '__main__':
     if(len(sys.argv) <= 1):
+        # if no CMD argument provided, use the default 50051 port
         print("Empty Port argument, using default port 50051")
         port = "50051"
     else:
+        # use the CMD argument as the port number 
         port = str(sys.argv[1])
 
     try:
@@ -119,12 +120,12 @@ if __name__ == '__main__':
         port = "50051"
 
 
-    client = RedditClient()
-    client.start_connection(port)
-    client.create_post("rush", "new meme", "lol", "www.meme.doogi")
-    client.vote_post(0,True)
-    client.get_post(2)
-    client.create_comment("james","lollol",0,0)
-    client.vote_comment(5,False)
-    client.get_most_upvote_comment(0,5)
-    client.expand_branch(4,5)
+    client = RedditClient(port)
+    client.start_connection()
+    #client.create_post("rush", "new meme", "lol", "www.meme.doogi")
+    #client.vote_post(0,True)
+    #client.get_post(2)
+    #client.create_comment("james","lollol",0,0)
+    #client.vote_comment(5,False)
+    print(client.get_most_upvote_comment(0,5))
+    #client.expand_branch(4,5)

@@ -19,9 +19,11 @@ def serve(port:str):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     if(len(sys.argv) <= 1):
+        # if no CMD argument provided, use the default 50051 port
         print("Empty Port argument, using default port 50051")
         port = "50051"
     else:
+        # use the CMD argument as the port number 
         port = str(sys.argv[1])
 
     try:

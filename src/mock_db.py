@@ -22,7 +22,7 @@ class ReplyType(Enum):
     REPLY_TYPE_POST = 0
     REPLY_TYPE_COMMENT = 1
 
-class mockDB:
+class MockDB:
     def __init__(self) -> None:
         self.users = [
             {

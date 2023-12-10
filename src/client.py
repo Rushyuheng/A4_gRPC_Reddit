@@ -1,6 +1,6 @@
 import grpc
 import sys
-from mockDB import ReplyType
+from mock_db import ReplyType
 from gen import service_pb2_grpc
 from gen import service_pb2
 from gen import model_pb2
@@ -121,10 +121,10 @@ if __name__ == '__main__':
 
     client = RedditClient()
     client.start_connection(port)
-    #client.create_post("rush", "new meme", "lol", "www.meme.doogi")
-    #client.vote_post(0,True)
-    #client.get_post(2)
-    #client.create_comment("james","lollol",0,0)
-    #client.vote_comment(5,False)
-    #client.get_most_upvote_comment(0,5)
+    client.create_post("rush", "new meme", "lol", "www.meme.doogi")
+    client.vote_post(0,True)
+    client.get_post(2)
+    client.create_comment("james","lollol",0,0)
+    client.vote_comment(5,False)
+    client.get_most_upvote_comment(0,5)
     client.expand_branch(4,5)

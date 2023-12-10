@@ -2,13 +2,13 @@ from concurrent import futures
 import sys
 import grpc
 import logging
-import RedditService
+import reddit_service
 from gen import service_pb2_grpc
 
 def serve(port:str):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     service_pb2_grpc.add_RedditServicer_to_server(
-        RedditService.RedditServicer(), server
+        reddit_service.RedditServicer(), server
     )
     server.add_insecure_port("[::]:" + port)
     server.start()
